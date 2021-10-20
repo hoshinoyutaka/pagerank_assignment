@@ -1,0 +1,1 @@
+select count(from_id), to_id from Links Group by to_id order by 1 desc
