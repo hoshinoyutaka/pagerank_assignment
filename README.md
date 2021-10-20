@@ -17,16 +17,15 @@ How many pages? 30
 332 https://www.tinymixtapes.com/news/charli-xcx-announces-new-netflix-series-im-band-nasty-cherry (46757) 45
 How many pages?
 ```
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We can run **spdump.py** to look at the contents of the database. It prints out the number of *incoming links*, *the old page rank*, *the new  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;page rank*, the *id* of the page, and the *url* of the page. The **spdump.py** program only shows pages that have at least one incoming  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;link to them:
+2. We can run **spdump.py** to look at the contents of the database. It prints out the number of *incoming links*, *the old page rank*, *the new page rank*, the *id* of the page, and the *url* of the page. The **spdump.py** program only shows pages that have at least one incoming link to them:  
 ```
 (988, None, 1.0, 1, 'https://www.tinymixtapes.com')
 (988, None, 1.0, 5, 'https://www.tinymixtapes.com/chocolate-grinder')
 ...
 (12, None, 1.0, 556, 'https://www.tinymixtapes.com/artists/mount-eerie')
 988 rows.
-```
-2. Once we crawl some pages, we can compute their ranks via [PageRank algorithm](https://en.wikipedia.org/wiki/PageRank). The importance of the page is based on the number and quality of inbound links to this page.   
+``` 
+3. Once we crawl some pages, we can compute their ranks via [PageRank algorithm](https://en.wikipedia.org/wiki/PageRank). The importance of the page is based on the number and quality of inbound links to this page.   
 Here is a sample run of **sprank.py**. You simply tell it how many PageRank iterations to run:
 ```
 dfsfdfs
