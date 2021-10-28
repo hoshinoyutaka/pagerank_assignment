@@ -1,9 +1,8 @@
 # Making a simple Search Engine
-This is a set of programs that emulate some of the key functions of a search engine. We basically want to crawl a web site,  
-compute the ranks of the collected pages and visualize the network on a graph. 
+This is a set of programs that emulate some of the key functions of a search engine. We basically want to crawl a website, compute the ranks of the collected pages and visualize the network on a graph. 
 
 More specifically:  
-1. The first step is to construct a web-crawler(see **spider.py**). The program crawls a site, pulls the series of pages and their hyperlinks into the database(named '**spider.sqlite**') and records the links between pages. The process is restartable, so you can collect more and more pages of different sites without re-crawling already existing ones.  
+1. The first step is to construct a web-crawler(see **spider.py**). The program crawls a site, pulls the series of pages and their hyperlinks into the database(named '**spider.sqlite**'), and records the links between pages. The process is restartable, so you can collect more and more pages of different sites without re-crawling already existing ones.  
 Here is a sample run, with each iteration we choose randomly amongst non-visited pages:  
     ```
     Enter web url or press Enter: https://www.tinymixtapes.com
