@@ -4,14 +4,10 @@ conn = sqlite3.connect('spider.sqlite')
 cur = conn.cursor()
 
 # Getting the ids(from_ids) that send out page rank. 
-cur.execute('SELECT DISTINCT from_id FROM Links')
-from_ids = list()
-for row in cur:
-    from_ids.append(row[0])
-
+from_ids = [ row[0] for row in cur.execute('SELECT DISTINCT from_id FROM Links')]
 #print('FROM IDS:', from_ids, end = ', ')
 
-# Getting the ids(to_ids) that receive page rank - we only are intrested in pages
+# Getting the ids(to_ids) that receive page rank - we are only intrested in pages
 # that have inbound and outbound links to ensure an algorithm works properly.
 # In result we get a strongly connected oriented graph.
 cur.execute('SELECT DISTINCT from_id, to_id FROM Links')
@@ -27,6 +23,7 @@ for row in cur:
     if to_id not in to_ids: to_ids.append(to_id)
 
 #print('TO IDS:', to_ids)
+#print('LINKS:', links)
 
 # Set up the previous ranks
 prev_ranks = {}
@@ -70,7 +67,7 @@ for i in range(many):
         #print(page, old_rank, amount, give_ids)
 
         for id in give_ids:
-            new_ranks[id] =  new_ranks[id] + amount
+            new_ranks[id] = new_ranks[id] + amount
         
     #print('NEW_RANKS: ', list(new_ranks.items())[:10])
 
@@ -104,7 +101,7 @@ for i in range(many):
 print('FINAL NEW_RANKS: ', list(new_ranks.items())[:10])
 cur.execute('UPDATE Pages SET old_rank = new_rank')
 for page, new_rank in list(new_ranks.items()):
-    cur.execute('UPDATE Pages SET new_rank = ? WHERE id = ?', ( new_rank, page) )
+    cur.execute('UPDATE Pages SET new_rank = ? WHERE id = ?', ( new_rank, page ) )
 conn.commit()
     
 cur.close()

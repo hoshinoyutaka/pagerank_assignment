@@ -1,1 +1,4 @@
-select count(from_id), to_id from Links Group by to_id order by 1 desc
+SELECT COUNT(from_id), to_id 
+     FROM Links 
+     GROUP BY to_id 
+     ORDER BY 1 DESC

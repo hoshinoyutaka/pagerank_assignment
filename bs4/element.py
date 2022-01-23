@@ -1,5 +1,6 @@
 from pdb import set_trace
 import collections
+collections.Callable = collections.abc.Callable
 import re
 import sys
 import warnings

@@ -15,27 +15,27 @@ ctx.verify_mode = ssl.CERT_NONE
 conn = sqlite3.connect('spider.sqlite')
 
 cur = conn.cursor()
-#cur.executescript('''drop table if exists Pages;
-#                     drop table if exists Links;
-#                     drop table if exists Webs   ''')
+#cur.executescript('''DROP TABLE IF EXISTS Pages;
+#                     DROP TABLE IF EXISTS Links;
+#                     DROP TABLE IF EXISTS Webs   ''')
 
-cur.execute('''create table if not exists Pages
+cur.execute('''CREATE TABLE IF NOT EXISTS Pages
             (id INTEGER PRIMARY KEY, url TEXT UNIQUE, html TEXT,
              error INTEGER, old_rank REAL, new_rank REAL)''')
 
-cur.execute('''create table if not exists Links 
+cur.execute('''CREATE TABLE IF NOT EXISTS Links 
             (from_id INTEGER, to_id INTEGER, UNIQUE(from_id, to_id))''')
 
-cur.execute('''create table if not exists Webs(url TEXT UNIQUE)''')
+cur.execute('''CREATE TABLE IF NOT EXISTS Webs(url TEXT UNIQUE)''')
 
 # Check to see if we are already in progress...
-cur.execute('select id, url from Pages where html IS NULL and error IS NULL LIMIT 1')
+cur.execute('SELECT id, url FROM Pages WHERE html IS NULL AND error IS NULL LIMIT 1')
 row = cur.fetchone()
 if row is not None:
     print("Restarting existing crawl. Remove spider.sqlite to restart the crawl.")
 else:
     starturl = input('Enter web url or press Enter: ')
-    if ( len(starturl) < 1 ): starturl = 'http://www.dr-chuck.com/'
+    if ( len(starturl) < 1 ): starturl = 'http://www.dr-chuck.com/'       #Set up a default starting host
     if ( starturl.endswith('/') ): starturl = starturl[:-1]
     web = starturl
     if ( starturl.endswith('.htm') ) or ( starturl.endswith('.html') ):
@@ -48,11 +48,7 @@ else:
         conn.commit()
 
 # Get the current webs
-cur.execute('SELECT url FROM Webs')
-webs = list()
-for row in cur:
-    webs.append(str(row[0]))
-    
+webs = [ str(row[0]) for row in cur.execute('SELECT url FROM Webs') ]   
 print(webs)
 
 many = 0
@@ -79,8 +75,8 @@ while True:
     cur.execute('DELETE FROM Links WHERE from_id = ?', (fromid,))
     try:
         user_agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'
-        req = urllib.request.Request(url, headers = {'User-Agent': user_agent})
-        document = urllib.request.urlopen(url, context=ctx)
+        req = urllib.request.Request(url, headers = {'User-Agent': user_agent.encode()})
+        document = urllib.request.urlopen(req, context=ctx)
         
         html = document.read()
         #print(html[:100])
@@ -125,7 +121,7 @@ while True:
         if ( ipos > 1 ) : href = href[:ipos]
         if ( href.endswith('.png') ) or ( href.endswith('.jpg') ) or ( href.endswith('.gif') ): continue
         if ( href.endswith('/') ) : href = href[:-1]
-        # print(href)
+        #print(href)
         if ( len(href) < 1 ) : continue
             
         # Check if the URL is in any of the webs. Webs are for pretty visualization so we only search 
