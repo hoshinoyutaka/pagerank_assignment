@@ -45,7 +45,7 @@ Here is a sample run of **sprank.py**. You simply tell it how many PageRank iter
     ...
     (17, 1.0, 2.258073835052772, 29, 'https://www.tinymixtapes.com/writer/leah+b.+levinson')]
     MAXRANK: 55.406224149940925  MINRANK: 0.089815062340995
-    Open force.html in a browser to view the visualization
+    Open index.html in a browser to view the visualization
     ```
     Secondly, we use D3.js, some HTML and CSS to put the vertices and edges from **spider.js** on an actual graph. You can view the result by opening the file **index.html** in your web browser or directly on this page: https://hoshinoyutaka.github.io/pagerank_assignment/    
     
